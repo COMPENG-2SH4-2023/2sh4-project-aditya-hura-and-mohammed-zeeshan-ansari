@@ -1,12 +1,13 @@
 #include "GameMechs.h"
+#include<iostream>
 
 GameMechs::GameMechs()
 {
-    boardSizeX=30;
-    boardSizeY=15;
+    boardSizeX = 30;
+    boardSizeY = 15;
     exitFlag = false;
-    loseflag = false;
-    score =0;   
+    loseFlag = false;
+    score = 0;
 }
 
 GameMechs::GameMechs(int boardX, int boardY)
@@ -19,10 +20,10 @@ GameMechs::GameMechs(int boardX, int boardY)
 }
 
 // do you need a destructor?
-GameMechs::~GameMechs()
+/*GameMechs::~GameMechs()
 {
 
-}
+}*/
 
 
 
@@ -38,7 +39,7 @@ bool GameMechs::getLoseFlagStatus()
 
 char GameMechs::getInput()
 {
-    exitFlag = true;
+    return input;
 }
 
 int GameMechs::getBoardSizeX()
@@ -60,6 +61,7 @@ void GameMechs::setExitTrue()
 void GameMechs::setLoseTrue()
 {
     loseFlag = true;
+    cout<<"Current score:"<<score<<endl;
 }
 
 void GameMechs::setInput(char this_input)
@@ -69,7 +71,7 @@ void GameMechs::setInput(char this_input)
 
 void GameMechs::clearInput()
 {
-    input ='\0';
+    input =0;
 }
 
 int GameMechs::GetScore()

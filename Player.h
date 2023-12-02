@@ -4,6 +4,7 @@
 #include "GameMechs.h"
 #include "objPos.h"
 #include "objPosArrayList.h"
+#include "Snakefood.h"
 
 class Player
 {
@@ -26,6 +27,7 @@ class Player
     private:
         objPos playerPos;   // Upgrade this in iteration 3.       
         enum Dir myDir;
+        enum Dir prevDirection;
 
         // Need a reference to the Main Game Mechanisms
         GameMechs* mainGameMechsRef;
