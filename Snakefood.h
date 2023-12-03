@@ -2,13 +2,14 @@
 #define SNAKEFOOD_H
 
 #include "objPos.h"
+#include "objPosArrayList.h"
 
 class SnakeFood {
 public:
     SnakeFood();
     ~SnakeFood();
 
-    void generateFood(objPos playerPos, int xRange, int yRange, const char* str);
+    void generateFood(objPosArrayList* playerPosList, int xRange, int yRange, const char* str);
     void getFoodPos(objPos& returnPos);
 
 private:

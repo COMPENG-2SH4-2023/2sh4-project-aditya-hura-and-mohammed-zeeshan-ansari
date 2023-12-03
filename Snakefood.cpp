@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <string.h>
+#include "objPosArrayList.h"
 
 SnakeFood::SnakeFood() {
     isFoodGenerated = false;
@@ -20,14 +21,25 @@ void SnakeFood::resetCharUsed() {
     }
 }
 
-void SnakeFood::generateFood(objPos playerPos, int xRange, int yRange, const char* str) {
+void SnakeFood::generateFood(objPosArrayList* playerPosList, int xRange, int yRange, const char* str) {
     if (!isFoodGenerated) {
         do {
             foodPos.x = 1 + rand() % (xRange - 2);
             foodPos.y = 1 + rand() % (yRange - 2);
 
-            // Check if food overlaps with player position
-            if (foodPos.x == playerPos.x && foodPos.y == playerPos.y) {
+            // Check if food overlaps with any player position
+            bool overlap = false;
+            for (int i = 0; i < playerPosList->getSize(); ++i) {
+                objPos playerPos;
+                playerPosList->getElement(playerPos, i);
+
+                if (foodPos.x == playerPos.x && foodPos.y == playerPos.y) {
+                    overlap = true;
+                    break;
+                }
+            }
+
+            if (overlap) {
                 continue;
             }
 
@@ -54,7 +66,4 @@ void SnakeFood::getFoodPos(objPos& returnPos) {
     returnPos = foodPos;
 }
 
-void SnakeFood::setFoodGenerated(bool value) {
-    isFoodGenerated = value;
-}
 

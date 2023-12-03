@@ -45,7 +45,7 @@ void Initialize(void)
 {
     MacUILib_init();
     MacUILib_clearScreen();
-    gameMechs = new GameMechs();
+    gameMechs = new GameMechs(30,15);
     player = new Player(gameMechs);
     snakeFood = new SnakeFood();
 
@@ -70,21 +70,22 @@ void RunLogic(void)
         gameMechs->setLoseTrue();
         gameMechs->clearInput();
     }
-    objPos playerPos;
-    player->getPlayerPos(playerPos);
-    snakeFood->generateFood(playerPos, boardSizeX, boardSizeY, "$");
+    objPosArrayList playerPosList;
+    player->getPlayerPos();
+    snakeFood->generateFood(&playerPosList, gameMechs->getBoardSizeX(), gameMechs->getBoardSizeY(), "$");
 }
 
 void DrawScreen(void)
 {
     MacUILib_clearScreen();
-    objPos playerPos;
-    player->getPlayerPos(playerPos);
+    objPosArrayList* playerPosList = player->getPlayerPos();
 
     objPos FoodPos;
     snakeFood->getFoodPos(FoodPos);
 
-    for (int i = 0; i < gameMechs->getBoardSizeY(); ++i)
+    bool isPlayerSymbol;
+
+    for (int i = 0; i < gameMechs->getBoardSizeY(); i++)
     {
         for (int j = 0; j <= gameMechs->getBoardSizeX(); j++)
         {
@@ -96,22 +97,36 @@ void DrawScreen(void)
             {
                 cout << "#"; // make border
             }
-            else if (playerPos.x == j && playerPos.y == i)
-            {
-
-                cout << playerPos.symbol;
-            }
-            else if (i == FoodPos.y && j == FoodPos.x)
-            {
-                cout << FoodPos.symbol; // draw food
-            }
             else
             {
-                cout << " "; // empty space between border
+                isPlayerSymbol = false;
+
+                // Check if the current position is occupied by the player
+                for (int k = 0; k < playerPosList->getSize(); k++)
+                {
+                    objPos currentPlayerPos;
+                    playerPosList->getElement(currentPlayerPos, k);
+
+                    if (currentPlayerPos.x == j && currentPlayerPos.y == i)
+                    {
+                        cout << currentPlayerPos.symbol;
+                        isPlayerSymbol = true;
+                        break;
+                    }
+                }
+
+                // If not occupied by the player, check for food
+                if (!isPlayerSymbol && i == FoodPos.y && j == FoodPos.x)
+                {
+                    cout << FoodPos.symbol; // draw food
+                }
+                else if (!isPlayerSymbol)
+                {
+                    cout << " "; // empty space between border
+                }
             }
         }
     }
-    cout << "DEBUG" << endl << playerPos.toString() << endl;
 }
 
 void LoopDelay(void)
