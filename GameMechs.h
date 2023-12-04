@@ -9,7 +9,6 @@
 
 using namespace std;
 
-
 class GameMechs
 {
     // Construct the remaining declaration from the project manual.
@@ -21,24 +20,34 @@ class GameMechs
     private:
         char input;
         bool exitFlag;
+        bool loseFlag;
         
         int boardSizeX;
         int boardSizeY;
-
+        int score;
+        SnakeFood* snakefood;
     public:
         GameMechs();
         GameMechs(int boardX, int boardY);
         
         bool getExitFlagStatus();
         void setExitTrue();
+        
+        bool getLoseFlagStatus();
+        void setLoseTrue();
 
-        char getInput();
-        void setInput(char this_input);
-        void clearInput();
+    char getInput();
+    void setInput(char this_input);
+    void clearInput();
 
         int getBoardSizeX();
         int getBoardSizeY();
-      
+
+        int GetScore();
+        void IncrementScore();
+
+        SnakeFood* getSnakeFood();
+        void setFoodGenerated(bool value);
 
 };
 

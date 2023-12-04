@@ -4,6 +4,7 @@
 #define ARRAY_MAX_CAP 200
 
 #include "objPos.h"
+#include <string>
 
 class objPosArrayList
 {
@@ -25,6 +26,7 @@ class objPosArrayList
         void getHeadElement(objPos &returnPos);
         void getTailElement(objPos &returnPos);
         void getElement(objPos &returnPos, int index);
+        std::string toString();
 };
 
 #endif
